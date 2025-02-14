@@ -1,0 +1,57 @@
+
+<div class="flex">
+  <button (click)="openModal()" type="button" class="text-white bg-gray-500 hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">{{datePicker}}</button>
+  <div *ngIf="showModal">
+    <div id="select-modal"  class=" bg-gray-300 fixed  top-1/49 right-1/22 z-50 ">
+      <div class="relative p-4 w-full max-w-md max-h-full">
+          <!-- Modal content -->
+          <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+             
+              <!-- Modal body -->
+              <div class="p-2 md:p-3">
+                  <ul class="space-y-2 mb-2">
+                      <li>
+                          <input (click)="closeModal('Current Pay Period')" type="radio" id="job-1" name="job" value="job-1" class="hidden peer" required />
+                          <label for="job-1" class="inline-flex items-center justify-between w-full p-1 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 dark:peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500">                           
+                              <div class="block">
+                                  <div class="w-full text-lg font-semibold">Current Pay Period</div>
+                                  <div class="w-full text-gray-500 dark:text-gray-400">01-24 to 02-10</div>
+                              </div>
+                              <svg class="w-4 h-4 ms-3 rtl:rotate-180 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/></svg>
+                          </label>
+                      </li>
+                      <li>
+                          <input (click)="closeModal('Previous Pay Period')" type="radio" id="job-2" name="job" value="job-2" class="hidden peer">
+                          <label for="job-2" class="inline-flex items-center justify-between w-full p-1 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 dark:peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500">
+                              <div class="block">
+                                  <div class="w-full text-lg font-semibold">Previous Pay Period</div>
+                                  <div class="w-full text-gray-500 dark:text-gray-400">01-24 to 02-10</div>
+                              </div>
+                              <svg class="w-4 h-4 ms-3 rtl:rotate-180 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/></svg>
+                          </label>
+                      </li>
+                      <li>
+                          <input (click)="closeModal('Custom')" type="radio" id="job-3" name="job" value="job-3" class="hidden peer">
+                          <label for="job-3" class="inline-flex items-center justify-between w-full p-1 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 dark:peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500">
+                              <div class="block">
+                                  <div class="w-full text-lg font-semibold">
+                                    <mat-form-field>
+                                      <mat-label>Enter a date range</mat-label>
+                                      <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                                        <input matStartDate formControlName="start" placeholder="Start date">
+                                        <input matEndDate formControlName="end" placeholder="End date">
+                                      </mat-date-range-input>
+                                      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                      <mat-date-range-picker #picker></mat-date-range-picker>
+                                    </mat-form-field>
+                                  </div>
+                              </div>
+                              <svg class="w-4 h-4 ms-3 rtl:rotate-180 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/></svg>
+                          </label>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div> 
+</div>

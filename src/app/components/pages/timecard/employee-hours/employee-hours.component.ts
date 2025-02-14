@@ -1,41 +1,37 @@
 import { Component, ChangeDetectionStrategy, OnInit, signal } from '@angular/core';
-import {MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { CommonModule } from '@angular/common';
-import { initDatepickers } from 'flowbite';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import Swal from 'sweetalert2';
 import { TimecardsService } from '../../../../shared/services/timecards.service';
 import { ActivatedRoute } from '@angular/router';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {provideNativeDateAdapter} from '@angular/material/core';
-
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { CompaniesComponent } from '../../../../shared/components/companies/companies.component';
+import { DateRangePickerComponent } from '../../../../shared/components/date-range-picker/date-range-picker.component';
+import { DatePickerService } from '../../../../shared/services/date-picker.service';
+import { EmployeeListComponent } from '../../../../shared/components/employee-list/employee-list.component';
 @Component({
   selector: 'app-employee-hours',
   standalone: true,
-  imports: [CommonModule, SweetAlert2Module, MatFormFieldModule, MatInputModule, MatDatepickerModule],
+  imports: [CommonModule, SweetAlert2Module, MatFormFieldModule, MatInputModule, MatDatepickerModule, CompaniesComponent, DateRangePickerComponent,EmployeeListComponent],
   providers: [provideNativeDateAdapter()],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './employee-hours.component.html',
   styleUrl: './employee-hours.component.css',
 })
-export default class EmployeeHoursComponent implements OnInit{
-  constructor(private timecardService: TimecardsService, private route: ActivatedRoute){}
+export default class EmployeeHoursComponent implements OnInit {
+  constructor(private timecardService: TimecardsService, private route: ActivatedRoute, private datePickerService: DatePickerService) { }
   ngOnInit(): void {
-    initDatepickers();
     const id = this.route.snapshot.paramMap.get('id');
-    this.timecardService.findTimecard(id!,`'dateStart=${this.dates.dateStart}&dateEnd=${this.dates.dateEnd}`).subscribe({
+    this.timecardService.findTimecard(id!, `dateStart=${this.datePickerService.dateStart}&dateEnd=${this.datePickerService.dateEnd}`).subscribe({
       next: (data) => {
         this.row = data;
       },
     });
   }
-  dates =
-    {
-      dateStart : '2024-10-14',
-      dateEnd : '2024-10-19'
-    }
-  ;
+  
   isEdit: boolean = false;
   ishover: boolean = false;
 
@@ -62,17 +58,17 @@ export default class EmployeeHoursComponent implements OnInit{
     this.test = day
     this.showModal = true;
   }
-  closeModal(){
+  closeModal() {
     this.showModal = false
   }
-  closeModalNote(){
+  closeModalNote() {
     this.showModalNote = false;
   }
-  toogleModalNote(note: string){
+  toogleModalNote(note: string) {
     console.log(note);
     this.showModalNote = true;
   }
-  delete(idTimeCard: string){
+  delete(idTimeCard: string) {
 
     Swal.fire({
       title: 'Are you sure, you want to delete?',

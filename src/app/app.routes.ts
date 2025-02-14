@@ -30,6 +30,11 @@ export const routes: Routes = [
           import('./components/pages//employee/employee.component'),
       },
       {
+        path: 'employee/newEmployee',
+        loadComponent: () =>
+          import('./components/pages/employee/new-employee/new-employee.component'),
+      },
+      {
         path: 'employee/:id',
         loadComponent: () =>
           import('./components/pages/employee/find-employee/find-employee.component'),

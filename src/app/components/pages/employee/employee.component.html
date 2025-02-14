@@ -6,7 +6,6 @@
     <form class="max-w-lg mx-auto">
       <div class="flex">
         <form [formGroup]="employeeForm"class="max-w-sm mx-auto">
-
           <select id="companies" class="bg-white-50 border border-white-300 text-white-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  name="companiesSelect" (change)="checkToogle()" formControlName="companies">
             <option value="AllCompanies" selected>All Companies</option>
             <option *ngFor="let item of companies" value="{{item.id}}">
@@ -37,11 +36,12 @@
     </label>
   </form>
 		</div>
-
+    
     <div class="content">
       <!-- The AG Grid component, with Dimensions, CSS Theme, Row Data, and Column Definition -->
+      
       <ag-grid-angular
-        style="width: 100%; height: 500px;"
+        style="width: 100%; height: 700px;"
         [class]="themeClass"
         [rowData]="rowData"
         [columnDefs]="colDefs"
@@ -54,3 +54,5 @@
         [paginationPageSizeSelector]="paginationPageSizeSelector"
       />
     </div>
+
+    

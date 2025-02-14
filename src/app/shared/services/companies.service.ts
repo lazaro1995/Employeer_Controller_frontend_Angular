@@ -6,9 +6,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 
-@Injectable({
-  providedIn: 'root'
-})
 export class CompaniesService {
 
   constructor(private globalService: GlobalService) { }

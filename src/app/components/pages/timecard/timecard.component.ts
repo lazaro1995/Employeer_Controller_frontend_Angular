@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {provideNativeDateAdapter} from '@angular/material/core';
+import { CommonModule } from '@angular/common';
 import { initDatepickers } from 'flowbite';
 import "flowbite/dist/flowbite.turbo.js";
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AgGridAngular } from 'ag-grid-angular';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
+import { DateRangePickerComponent } from '../../../shared/components/date-range-picker/date-range-picker.component';
 import {
   ColDef,
   GridApi,
@@ -14,27 +17,24 @@ import {
 import { EmployeesServiceService } from '../../../shared/services/employees.service';
 import { EmployeeInterface } from '../../../shared/interfaces/employee-interface';
 import { DateRangePicker } from 'flowbite-datepicker';
+import { DatePickerService } from '../../../shared/services/date-picker.service';
 
-// Row Data Interface
-interface IRow {
-  make: string;
-  model: string;
-  price: number;
-  electric: boolean;
-  employee: string;
-  phoneNumber: string;
-}
+
 
 @Component({
   selector: 'app-timecard',
   standalone: true,
-  imports: [AgGridAngular,RouterLink, RouterLinkActive],
+  imports: [AgGridAngular,RouterLink, RouterLinkActive,CommonModule, DateRangePickerComponent ],
   templateUrl: './timecard.component.html',
   styleUrl: './timecard.component.css',
+   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [provideNativeDateAdapter() ],
 })
 export default class TimecardComponent {
   private gridApi!: GridApi;
-  constructor(private employeeService: EmployeesServiceService, private router: Router) {}
+  message: string = ''
+  constructor(private employeeService: EmployeesServiceService, private router: Router, private datePickerService: DatePickerService) {
+  }
   ngOnInit(): void {
      initDatepickers();
      DateRangePicker

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeesServiceService } from '../../../shared/services/employees.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {FormGroup, FormControl} from '@angular/forms';
+import { FormGroup, FormControl} from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AgGridAngular } from 'ag-grid-angular';
 import { CompanyInterface } from '../../../shared/interfaces/company-interface';
@@ -40,7 +40,7 @@ export default class EmployeeComponent {
   themeClass = 'ag-theme-quartz';
   pagination = true;
   paginationPageSize = 100;
-  paginationPageSizeSelector = [10, 25, 100];
+  paginationPageSizeSelector = [25, 50, 100];
   defaultColRef: ColDef = {
     flex: 1,
     // editable: true,

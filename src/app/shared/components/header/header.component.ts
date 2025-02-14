@@ -2,16 +2,19 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
+import { CompaniesComponent } from '../companies/companies.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule, SweetAlert2Module],
+  imports: [RouterModule, SweetAlert2Module, CommonModule,CompaniesComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent {
+export class HeaderComponent{
   localName = localStorage.getItem('name');
+  showModal = true;
   constructor(private router: Router) {}
   logout(): void {
     Swal.fire({
