@@ -4,28 +4,28 @@
         <ng-template matStepLabel>Personal Information</ng-template>
         <mat-form-field>
           <mat-label>Employee ID</mat-label>
-          <input matInput placeholder="Employee ID" formControlName="employeeId" required>
+          <input matInput placeholder="Employee ID" formControlName="employee_id" required>
         </mat-form-field>
         <mat-form-field>
           <mat-label>First Name</mat-label>
-          <input matInput placeholder="First name" formControlName="firstName" required>
+          <input matInput placeholder="First name" formControlName="first_name" required>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Middle Name</mat-label>
-          <input matInput placeholder="Middle name" formControlName="middleName" required>
+          <input matInput placeholder="Middle name" formControlName="middle_name">
         </mat-form-field>
         <mat-form-field>
           <mat-label>Last Name</mat-label>
-          <input matInput placeholder="Last name" formControlName="lastName" required>
+          <input matInput placeholder="Last name" formControlName="last_name" required>
         </mat-form-field>
         <div>
           <p>Go to a different step to see the error state</p>
-          <button mat-button matStepperNext>Next</button>
+          <button mat-raised-button style="background-color: green; color: white;" matStepperNext>Next</button>
         </div>
       </form>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup" errorMessage="Field is missing.">
-      <form [formGroup]="secondFormGroup" style="display: flex; flex-direction: column;">
+    <mat-step [stepControl]="firstFormGroup" errorMessage="Field is missing.">
+      <form [formGroup]="firstFormGroup" style="display: flex; flex-direction: column;">
         <ng-template matStepLabel>Contact Information</ng-template>
         <mat-form-field>
           <mat-label>Street</mat-label>
@@ -44,7 +44,7 @@
         </mat-form-field>
         <mat-form-field>
         <mat-label>PostalCode</mat-label>
-          <input matInput placeholder="Postal Code" formControlName="postalCode"
+          <input matInput placeholder="Postal Code" formControlName="postal_code"
                  required>
         </mat-form-field>
         <mat-form-field>
@@ -64,32 +64,32 @@
         </mat-form-field>
         <div>
           <p>Go to a different step to see the error state</p>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
+          <button mat-button mat-raised-button color="primary" matStepperPrevious>Back</button>
+          <button mat-raised-button style="background-color: green; color: white;" matStepperNext>Next</button>
         </div>
       </form>
     </mat-step>
-      <mat-step [stepControl]="thirdFormGroup" errorMessage="Field is missing.">
-        <form [formGroup]="thirdFormGroup" style="display: flex; flex-direction: column;">
+      <mat-step [stepControl]="firstFormGroup" errorMessage="Field is missing.">
+        <form [formGroup]="firstFormGroup" style="display: flex; flex-direction: column;">
           <ng-template matStepLabel>Emergency Information</ng-template>
           <mat-form-field>
             <mat-label>Emergency Contact</mat-label>
-            <input matInput placeholder="Emergency Contact" formControlName="emergencyContact" required>
+            <input matInput placeholder="Emergency Contact" formControlName="emergency_contact" required>
           </mat-form-field>
           <mat-form-field>
             <mat-label>Emergency Phone</mat-label>
-            <input matInput placeholder="Emergency Phone" formControlName="emergencyPhone" required>
+            <input matInput placeholder="Emergency Phone" formControlName="emergency_phone" required>
           </mat-form-field>
           <mat-form-field>
             <mat-label>Notes</mat-label>
-            <input matInput placeholder="Notes" formControlName="notes" required>
+            <input matInput placeholder="Notes" formControlName="notes">
           </mat-form-field>
         </form>
       <p>You are now done.</p>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
-        <button mat-button >Save</button>
+        <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+        <button mat-raised-button color="warn" (click)="stepper.reset()">Reset</button>
+        <button mat-raised-button style="background-color: green; color: white;" (click)="createEmployee()" (click)="stepper.reset()">Create employee</button>
       </div>
     </mat-step>
   </mat-stepper>

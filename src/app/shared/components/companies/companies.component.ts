@@ -18,7 +18,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 export class CompaniesComponent implements OnInit {
   employeeForm = new FormGroup({
     isInactive: new FormControl(''),
-    companies: new FormControl('')
+    companies: new FormControl('AllCompanies')
+
   });
   data: any[] = [];
   companies: CompanyInterface[] = [];
@@ -29,11 +30,10 @@ export class CompaniesComponent implements OnInit {
     this.companyService.getAllCompanies().subscribe({
       next: (data) => {
         this.companies = data.data;
-        console.log(data);
       },
     });
   }
-  checkToogle(){
-    console.log('sdsad')
+  changeCompany(){
+    this.companyService.company$.next(this.employeeForm.value.companies)
   }
 }

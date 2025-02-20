@@ -20,6 +20,17 @@ export class TimecardsService {
       `${this.globalService.apiUrl}v1/timecards/${id}?${data}`
     );
   }
+  createTimecard(timeCard: any){
+    return this._http.post<any>(
+      `${this.globalService.apiUrl}v1/timecards/`, timeCard
+    );
+  }
+  updateTimecard(timecard : any, id:any){
+    console.log(timecard)
+    return this._http.patch<any>(
+      `${this.globalService.apiUrl}v1/timecards/${id}`,timecard
+    );
+  }
   deleteTimecard(id: string) {
     return this._http.delete<any>(
       `${this.globalService.apiUrl}v1/timecards/${id}`, {"body": {"id": id}}

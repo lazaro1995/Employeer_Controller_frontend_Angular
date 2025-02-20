@@ -2,34 +2,21 @@
 
 <!-- component -->
 <div class="bg-white p-8 rounded-md w-full">
-	<div class=" flex items-center justify-left pb-6">
+	<div class=" flex items-left justify-left pb-6">
     <form class="max-w-lg mx-auto">
-      <div class="flex">
-        <form [formGroup]="employeeForm"class="max-w-sm mx-auto">
-          <select id="companies" class="bg-white-50 border border-white-300 text-white-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  name="companiesSelect" (change)="checkToogle()" formControlName="companies">
-            <option value="AllCompanies" selected>All Companies</option>
-            <option *ngFor="let item of companies" value="{{item.id}}">
-              {{item.name}}
-            </option>
-          </select>
-        </form>
-          <div class="relative max-w-sm mx-auto">
-              <input type="search" id="filter-text-box" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search employee"
-              (input)="onFilterTextBoxChanged()" required />
-              <button type="submit" class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                  <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                  </svg>
-                  <span class="sr-only">Search</span>
-              </button>
-          </div>
-
-
-
+        <div class="relative">
+          <input type="search" id="filter-text-box" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search employee"
+          (input)="onFilterTextBoxChanged()" required />
+          <button type="submit" class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-500 rounded-e-lg border border-blue-700 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+              </svg>
+              <span class="sr-only">Search</span>
+          </button>
       </div>
     </form>
     <form [formGroup]="employeeForm" >
-    <label class="inline-flex items-center mb-5 cursor-pointer">
+    <label class="inline-flex mb-5 cursor-pointer">
       <input formControlName="isInactive" type="checkbox" (change)="checkToogle()" id="isInactive" value="" class="sr-only peer">
       <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
       <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Include Inactive</span>

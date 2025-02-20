@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
@@ -14,12 +14,14 @@ import { DatePickerService } from '../../services/date-picker.service';
   styleUrl: './date-range-picker.component.css',
   providers: [DatePipe],
 })
-export class DateRangePickerComponent {
+export class DateRangePickerComponent implements OnInit {
   readonly range = new FormGroup({
     start: new FormControl<any | null>(null),
     end: new FormControl<Date | null>(null),
   });
-
+ngOnInit(): void {
+  console.log(new Date().getDay())
+}
 
   fullDate = new Date();
   formattedDate: string;
@@ -43,11 +45,15 @@ export class DateRangePickerComponent {
       this.dateEnd = this.datePipe.transform(this.range.value.end, 'yyyy-MM-dd')!;
       this.dateStart = this.datePipe.transform(this.range.value.start, 'yyyy-MM-dd')!;
       this.datePicker = this.dateStart + ' to ' + this.dateEnd;
+      this.datePickerService.setDateRange(this.dateStart,this.dateEnd);
     }
-    else {
-      this.datePicker = date;
+    else if(date == 'Previous Pay Period'){
+      this.datePickerService.setDateRange('0','0');
+      this.datePicker = 'Previous Pay Period'
     }
-    
-    this.datePickerService.setDateRange(this.dateStart,this.dateEnd);
+    else{
+      this.datePickerService.setDateRange('1','1');
+      this.datePicker = 'Current Pay Period'
+    }
   }
 }

@@ -26,7 +26,7 @@ import { CompaniesService } from '../../../shared/services/companies.service';
 })
 export default class EmployeeComponent {
   employeeForm = new FormGroup({
-    isInactive: new FormControl(''),
+    isInactive: new FormControl(false),
     companies: new FormControl('')
   });
   data: any[] = [];
@@ -69,18 +69,9 @@ export default class EmployeeComponent {
   }
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
-    this.employeeService.getAllEmployees('?status[eq]=1').subscribe({
-      next: (data) => {
-        this.rowData = data.data;
-      },
+    this.companyService.company$.subscribe(data => {
+      this.checkToogle();
     });
-    this.companyService.getAllCompanies().subscribe({
-      next: (data) => {
-        this.companies = data.data;
-        console.log(data);
-      },
-    });
-    // this.rowData = this.rowData;
   }
   doubleClickCell(){
     const selectedData = this.gridApi.getSelectedRows();
@@ -88,6 +79,7 @@ export default class EmployeeComponent {
     this.router.navigate([`/employee/${selectedData[0].id}`]);
   }
   checkToogle(){
+    this.employeeForm.value.companies = this.companyService.company$.value
     if(this.employeeForm.value.isInactive){
       if(this.employeeForm.value.companies == 'AllCompanies'){
         this.employeeService.getAllEmployees('').subscribe({

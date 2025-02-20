@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import {FormBuilder, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatStepperModule} from '@angular/material/stepper';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { STEPPER_GLOBAL_OPTIONS, StepperSelectionEvent } from '@angular/cdk/stepper';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatStepperModule } from '@angular/material/stepper';
+import { EmployeesServiceService } from '../../../../shared/services/employees.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-new-employee',
@@ -12,7 +14,7 @@ import {MatStepperModule} from '@angular/material/stepper';
   providers: [
     {
       provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: {showError: true},
+      useValue: { showError: true },
     },
   ],
   imports: [MatStepperModule,
@@ -24,27 +26,39 @@ import {MatStepperModule} from '@angular/material/stepper';
   templateUrl: './new-employee.component.html',
   styleUrl: './new-employee.component.css'
 })
+
 export default class NewEmployeeComponent {
   firstFormGroup = this._formBuilder.group({
-    firstName: ['', Validators.required],
-    lastName: ['', Validators.required],
-    middleName: ['', Validators.required],
-    employeeId: ['', Validators.required],
-  });
-  secondFormGroup = this._formBuilder.group({
+    first_name: ['', Validators.required],
+    last_name: ['', Validators.required],
+    middle_name: ['',],
+    employee_id: ['', Validators.required],
+    company_id : ['2'],
+    company: [2],
+    status: ['1'],
+    client_id: [2],
     street: ['', Validators.required],
     city: ['', Validators.required],
     state: ['', Validators.required],
-    postalCode: ['', Validators.required],
+    postal_code: ['', Validators.required],
     country: ['', Validators.required],
     phone: ['', Validators.required],
     email: ['', Validators.required],
+    emergency_contact: ['', Validators.required],
+    emergency_phone: ['', Validators.required],
+    notes: ['',],
   });
-  thirdFormGroup = this._formBuilder.group({
-    emergencyContact: ['', Validators.required],
-    emergencyPhone: ['', Validators.required],
-    notes: ['', Validators.required],
-  });
+  constructor(private _formBuilder: FormBuilder, private employeeService: EmployeesServiceService, private toast: ToastrService) { }
 
-  constructor(private _formBuilder: FormBuilder) {}
+  createEmployee() {
+    this.employeeService.createEmployee(this.firstFormGroup.value).subscribe({
+      next: (data) => {
+        this.toast.success('Employee Created.', 'Sucess');
+      },
+      error: (err) =>{
+        this.toast.error(err.error.message, 'Error');
+      }
+    })
+  }
+
 }

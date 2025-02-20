@@ -18,6 +18,7 @@ import { EmployeesServiceService } from '../../../shared/services/employees.serv
 import { EmployeeInterface } from '../../../shared/interfaces/employee-interface';
 import { DateRangePicker } from 'flowbite-datepicker';
 import { DatePickerService } from '../../../shared/services/date-picker.service';
+import { CompaniesService } from '../../../shared/services/companies.service';
 
 
 
@@ -33,12 +34,13 @@ import { DatePickerService } from '../../../shared/services/date-picker.service'
 export default class TimecardComponent {
   private gridApi!: GridApi;
   message: string = ''
-  constructor(private employeeService: EmployeesServiceService, private router: Router, private datePickerService: DatePickerService) {
+  constructor(private employeeService: EmployeesServiceService, private router: Router, private datePickerService: DatePickerService,private companiesService:  CompaniesService) {
   }
   ngOnInit(): void {
      initDatepickers();
      DateRangePicker
   }
+  company = this.companiesService.company$.value;
   themeClass = 'ag-theme-quartz';
   pagination = true;
   paginationPageSize = 100;
@@ -70,16 +72,32 @@ export default class TimecardComponent {
   }
   onGridReady(params: GridReadyEvent) {
     this.gridApi = params.api;
-    this.employeeService.getAllEmployees('?status[eq]=1').subscribe({
-      next: (data) => {
-        this.rowData = data.data;
-      },
+    this.companiesService.company$.subscribe(data => {
+      this.loadEmployee()
     });
+    
     // this.rowData = this.rowData;
   }
   doubleClickCell(){
     const selectedData = this.gridApi.getSelectedRows();
     this.router.navigate([`/timecard/${selectedData[0].id}`]);
+  }
+  loadEmployee(){
+    this.company = this.companiesService.company$.value
+    if(this.company === 'AllCompanies'){
+      this.employeeService.getAllEmployees('?status[eq]=1').subscribe({
+        next: (data) => {
+          this.rowData = data.data;
+        },
+      });
+    }
+    else{
+      this.employeeService.getAllEmployees(`?status[eq]=1&&company[eq]=${this.company}`).subscribe({
+        next: (data) => {
+          this.rowData = data.data;
+        },
+      });
+    }
   }
 
 }

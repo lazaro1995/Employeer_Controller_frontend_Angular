@@ -30,6 +30,9 @@ export class EmployeesServiceService {
       `${this.globalService.apiUrl}v1/employees/${id}`,employee
     );
   }
+  createEmployee(employee: any){
+    return this._http.post(`${this.globalService.apiUrl}v1/employees/`,employee)
+  }
   // createHeaders(){
   //   return{
   //     headers: new HttpHeaders({

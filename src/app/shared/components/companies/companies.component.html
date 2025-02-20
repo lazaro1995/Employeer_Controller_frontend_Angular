@@ -1,9 +1,9 @@
 <form class="max-w-lg mx-auto">
     <div class="flex">
-      <form [formGroup]="employeeForm"class="max-w-sm mx-auto">
+      <form [formGroup]="employeeForm" class="max-w-sm mx-auto">
           <mat-form-field>
-            <mat-select value="All Companies" name="All Companies" >
-              <mat-option  value="All Companies" >All Companies</mat-option>  
+            <mat-select formControlName="companies" (selectionChange)="changeCompany()"  >
+              <mat-option  value="AllCompanies" >All Companies</mat-option>  
                 <mat-option *ngFor="let item of companies" value="{{item.id}}" >{{item.name}}</mat-option>  
             </mat-select>
           </mat-form-field>
@@ -11,5 +11,4 @@
     </div>
   </form>
   
-
  
