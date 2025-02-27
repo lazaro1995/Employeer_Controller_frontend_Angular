@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { GlobalService } from './global.service';
 
 @Injectable({
@@ -10,7 +10,8 @@ export class EmployeesServiceService {
 
   constructor(private globalService: GlobalService) { }
   private readonly _http = inject(HttpClient);
-
+  public employee$ = new BehaviorSubject<any>('');
+  
   getAllEmployees(data : string): Observable<any> {
 
       return this._http.get<any>(

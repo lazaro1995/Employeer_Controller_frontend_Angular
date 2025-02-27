@@ -1,4 +1,3 @@
-Control value: {{myControl.value || 'empty'}}
 <form class="example-form">
   <mat-form-field class="example-full-width">
     <mat-label></mat-label>
@@ -10,7 +9,7 @@ Control value: {{myControl.value || 'empty'}}
            [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete">
       @for (option of filteredOptions | async; track option) {
-        <mat-option [value]="option">{{option}}</mat-option>
+        <mat-option [value]="option.name" (click)="employeeSelected({option})">{{option.name}}</mat-option>
       }
     </mat-autocomplete>
   </mat-form-field>

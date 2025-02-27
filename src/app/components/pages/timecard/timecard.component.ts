@@ -3,7 +3,7 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { initDatepickers } from 'flowbite';
 import "flowbite/dist/flowbite.turbo.js";
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router } from '@angular/router';
 import { AgGridAngular } from 'ag-grid-angular';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
@@ -25,7 +25,7 @@ import { CompaniesService } from '../../../shared/services/companies.service';
 @Component({
   selector: 'app-timecard',
   standalone: true,
-  imports: [AgGridAngular,RouterLink, RouterLinkActive,CommonModule, DateRangePickerComponent ],
+  imports: [AgGridAngular,CommonModule, DateRangePickerComponent ],
   templateUrl: './timecard.component.html',
   styleUrl: './timecard.component.css',
    schemas: [CUSTOM_ELEMENTS_SCHEMA],

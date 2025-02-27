@@ -5,6 +5,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from '../../../shared/services/auth.service';
 import { RegisterInterface } from '../../../shared/interfaces/auth/register-interface';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -20,16 +21,26 @@ export class RegisterComponent {
     password: new FormControl('', [Validators.required]),
     confirmPassword: new FormControl('', [Validators.required])
   });
-  constructor(private formBuilder:FormBuilder,private router:Router, private registerService: AuthService){}
+  private tokenKey = 'authToken';
+  constructor(private formBuilder:FormBuilder,private router:Router, private registerService: AuthService, private toast: ToastrService){}
   register(){
     if(this.registerForm.valid){
       this.registerService.register(this.registerForm.value as RegisterInterface).subscribe({
         next:(data)=>{
-
-      console.log(data)
+          this.toast.success('Register succesfully.', 'Sucess');
+          this.setToken(data.accessToken, data.user.name);
             this.router.navigateByUrl('/dashboard')
-
+            this.registerForm.reset();
+    },
+    error: (err) =>{
+      this.toast.error(err, 'Error');
     }
-      })
-    }}
+  });             
+}
+
+}
+setToken(token: string, name: string): void {
+  localStorage.setItem(this.tokenKey, token);
+  localStorage.setItem('name', name);
+}
 }

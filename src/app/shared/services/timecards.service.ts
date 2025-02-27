@@ -15,7 +15,7 @@ export class TimecardsService {
       `${this.globalService.apiUrl}v1/timecards${data}`
     );
   }
-  findTimecard(id: string, data:string) {
+  findTimecard(id: any, data:string) {
     return this._http.get<any>(
       `${this.globalService.apiUrl}v1/timecards/${id}?${data}`
     );
@@ -26,7 +26,6 @@ export class TimecardsService {
     );
   }
   updateTimecard(timecard : any, id:any){
-    console.log(timecard)
     return this._http.patch<any>(
       `${this.globalService.apiUrl}v1/timecards/${id}`,timecard
     );

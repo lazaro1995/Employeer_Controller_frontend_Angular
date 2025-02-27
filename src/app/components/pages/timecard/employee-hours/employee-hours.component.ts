@@ -5,35 +5,38 @@ import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angu
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import Swal from 'sweetalert2';
 import { TimecardsService } from '../../../../shared/services/timecards.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { CompaniesComponent } from '../../../../shared/components/companies/companies.component';
 import { DateRangePickerComponent } from '../../../../shared/components/date-range-picker/date-range-picker.component';
 import { DatePickerService } from '../../../../shared/services/date-picker.service';
 import { EmployeeListComponent } from '../../../../shared/components/employee-list/employee-list.component';
 import { ToastrService } from 'ngx-toastr';
 import { LocationService } from '../../../../shared/services/location.service';
+import { EmployeesServiceService } from '../../../../shared/services/employees.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-employee-hours',
   standalone: true,
-  imports: [CommonModule, SweetAlert2Module, FormsModule, ReactiveFormsModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, MatInputModule, MatDatepickerModule, CompaniesComponent, DateRangePickerComponent, EmployeeListComponent],
+  imports: [CommonModule, SweetAlert2Module, FormsModule, ReactiveFormsModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, MatInputModule, MatDatepickerModule, DateRangePickerComponent, EmployeeListComponent],
   providers: [provideNativeDateAdapter()],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './employee-hours.component.html',
   styleUrl: './employee-hours.component.css',
 })
 export default class EmployeeHoursComponent implements OnInit {
-  constructor(private timecardService: TimecardsService, private route: ActivatedRoute,
+  constructor(private timecardService: TimecardsService, private route: ActivatedRoute, private router: Router, private employeeService: EmployeesServiceService,
      private datePickerService: DatePickerService, private _formBuilder: FormBuilder, private toast: ToastrService, private location: LocationService) { }
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.timecardService.findTimecard(id!, `dateStart=${this.datePickerService.dateStart}&dateEnd=${this.datePickerService.dateEnd}`).subscribe({
-      next: (data) => {
-        this.row = data;
-      },
+    this.employeeService.employee$ = new BehaviorSubject<any>(id);
+    this.datePickerService.date$.subscribe(data => {
+      this.loadTimecard(id);
+    });
+    this.employeeService.employee$.subscribe(data => {
+      this.changeUrl(this.employeeService.employee$.value)
     });
   }
   
@@ -41,7 +44,7 @@ export default class EmployeeHoursComponent implements OnInit {
     punch_type: ['', Validators.required],
     punch_date: [ '', Validators.required],
     status: ['1',],
-    employee_id: [this.route.snapshot.paramMap.get('id')],
+    employee_id: [this.employeeService.employee$.value],
     punch_time: ['', Validators.required],
     notes: [''],
   });
@@ -72,6 +75,19 @@ export default class EmployeeHoursComponent implements OnInit {
   idTimecard = ''
   errorMessage = ''
   locationObtained = false
+
+  changeUrl(id:any){
+    this.router.navigate([`/timecard/${id}`])
+    this.loadTimecard(id)
+  }
+
+  loadTimecard(id: any){
+    this.timecardService.findTimecard(id, `dateStart=${this.datePickerService.dateStart}&dateEnd=${this.datePickerService.dateEnd}`).subscribe({
+      next: (data) => {
+        this.row = data;
+      },
+    });
+  }
   createTimeCard(){
     this.createPunch.value.punch_date = this.punchDate;
      const timecard = 
@@ -79,11 +95,9 @@ export default class EmployeeHoursComponent implements OnInit {
         punch_type: this.createPunch.value.punch_type,
         punch_date:  this.createPunch.value.punch_date ,
         status: this.createPunch.value.status ,
-        employee_id: this.createPunch.value.employee_id,
+        employee_id: this.employeeService.employee$.value,
         punch_time: this.createPunch.value.punch_time
       }
-    
- 
  this.location.getLocation().subscribe({
   next: (resp) => {
     if (resp) {
@@ -121,6 +135,7 @@ edit(){
       }
       this.timecardService.updateTimecard(timecard, this.idTimecard).subscribe({
         next: (data) => {
+          console.log(timecard)
           this.toast.success('Timecard Updated.', 'Sucess');
         },
         error: (err) =>{
@@ -134,7 +149,7 @@ edit(){
   toggleModal(day: string, edit: boolean, itemable : any, idTimecard: string) {
     this.isEdit = edit
     this.test = day
-    this.punchDate = itemable.data[0].punch_date
+    this.punchDate = itemable.day
     this.showModal = true;
     this.idTimecard = idTimecard
   }

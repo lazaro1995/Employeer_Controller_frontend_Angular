@@ -4,7 +4,7 @@
   
   
   <div class="flex items-center "><app-employee-list></app-employee-list><app-date-range-picker></app-date-range-picker></div>
-    <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+    <div class="-mx-2 sm:-mx-4 px-2 sm:px-4 py-2 overflow-x">
       <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
         <table class="min-w-full leading-normal" *ngFor="let itemable of row">
           <thead>
@@ -54,31 +54,31 @@
           </thead>
 
           <tbody>
-            <tr class="active:bg-green-200" *ngFor="let item of itemable.data" (mouseenter)="isRowHovered(true)"
+            <tr class="active:bg-green-200" *ngFor="let item of itemable.data" (mouseenter)="isRowHovered(true)" [ngStyle]="{'height.px':1}"
               (mouseleave)="isRowHovered(false)">
-              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td class="px-1 py-1 border-b border-gray-200 bg-white text-sm">
                 <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                  <span aria-hidden [ngClass]="item.punch_type =='1' ? 'bg-green-200': 'bg-blue-200' "
+                  <span aria-hidden [ngClass]="item.punch_type =='Missing punch' ? 'bg-red-800' : 'bg-green-200' "
                     class="absolute inset-0 opacity-50 rounded-full"></span>
                   <span class="relative">{{ item.punch_type }}</span>
                 </span>
               </td>
-              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td class="px-1 py-1 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap">
                   {{ item.punch_time }}
                 </p>
               </td>
-              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td class="px-1 py-1 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap">
                   {{ item.punch_type }}
                 </p>
               </td>
-              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td class="px-1 py-1 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap">43</p>
               </td>
-              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td class="px-1 py-1 border-b border-gray-200 bg-white text-sm">
                 <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                  <span aria-hidden [ngClass]="item.punch_type =='1' ? 'bg-green-200': 'bg-blue-200' "
+                  <span aria-hidden [ngClass]="item.punch_type =='Missing punch' ? 'bg-red-800' : 'bg-green-200' "
                     class="absolute inset-0 opacity-50 rounded-full"></span>
                   <span class="relative">{{ item.punch_type }}</span>
                 </span>
