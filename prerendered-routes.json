@@ -1,0 +1,12 @@
+{
+  "routes": [
+    "/",
+    "/dashboard",
+    "/employee",
+    "/employee/newEmployee",
+    "/login",
+    "/register",
+    "/report",
+    "/timecard"
+  ]
+}
